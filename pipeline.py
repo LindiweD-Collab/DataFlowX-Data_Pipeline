@@ -4,10 +4,10 @@ import pandas as pd
 import mysql.connector
 
 DB_CONFIG = {
-    'user': 'root',
-    'password': 'yournewpassword',
-    'host': 'localhost',
-    'database': 'pipeline_db'
+    'user': 'datapipeline_postgressql_mydatabase_user',
+    'password': 'fo0eDlkGT0Ux56Lxi0UdMzUH1qUleNFM',
+    'host': 'dpg-cvort4q4d50c73blls3g-a',
+    'database': 'datapipeline_postgressql_mydatabase'
 }
 
 
