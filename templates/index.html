@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Data Pipeline Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #1e88e5;
+            color: white;
+            padding: 1rem 2rem;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        .container {
+            padding: 2rem;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #43a047;
+            color: white;
+            padding: 0.7rem 1.5rem;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #388e3c;
+        }
+
+        .section {
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            margin-bottom: 1rem;
+        }
+
+        .quote {
+            font-style: italic;
+            color: #555;
+        }
+
+        .author {
+            text-align: right;
+            font-weight: bold;
+            margin-top: 0.5rem;
+        }
+
+        .user {
+            font-weight: 500;
+        }
+
+        .email {
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>📊 Data Pipeline Dashboard</h1>
+</header>
+
+<div class="container">
+    <a href="/run" class="btn">🚀 Run Data Pipeline</a>
+
+    {% if users %}
+        <div class="section">
+            <h2>👤 Users</h2>
+            {% for user in users %}
+                <div class="card">
+                    <div class="user">{{ user.name }}</div>
+                    <div class="email">{{ user.email }}</div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if quotes %}
+        <div class="section">
+            <h2>💬 Quotes</h2>
+            {% for quote in quotes %}
+                <div class="card">
+                    <div class="quote">"{{ quote.quote }}"</div>
+                    <div class="author">- {{ quote.author }}</div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+
+</body>
+</html>
+
