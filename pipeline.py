@@ -1,14 +1,14 @@
-import psycopg2
+import mysql.connector
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 
 # Update DB_CONFIG for PostgreSQL
 DB_CONFIG = {
-    'user': 'datapipeline_postgressql_mydatabase_user',
-    'password': 'fo0eDlkGT0Ux56Lxi0UdMzUH1qUleNFM',
-    'host': 'dpg-cvort4q4d50c73blls3g-a',
-    'database': 'datapipeline_postgressql_mydatabase'
+     'user': 'root',
+     'password': 'yournewpassword',
+     'host': 'localhost',
+     'database': 'pipeline_db'
 }
 
 def fetch_api_data():
@@ -34,7 +34,7 @@ def clean_data(api_data, web_data):
     return df_api, df_web
 
 def store_data_to_db(df_users, df_quotes):
-    conn = psycopg2.connect(**DB_CONFIG)  # Use psycopg2 for PostgreSQL
+    conn = mysql.connector.connect(**DB_CONFIG)# Use psycopg2 for PostgreSQL
     cursor = conn.cursor()
 
     cursor.execute("""
