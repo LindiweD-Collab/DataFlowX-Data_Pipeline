@@ -1,15 +1,15 @@
+import psycopg2
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
-import mysql.connector
 
+# Update DB_CONFIG for PostgreSQL
 DB_CONFIG = {
-    'user': 'root',
-    'password': 'yournewpassword',
-    'host': 'localhost',
-    'database': 'pipeline_db'
+    'user': 'datapipeline_postgressql_mydatabase_user',
+    'password': 'fo0eDlkGT0Ux56Lxi0UdMzUH1qUleNFM',
+    'host': 'dpg-cvort4q4d50c73blls3g-a',
+    'database': 'datapipeline_postgressql_mydatabase'
 }
-
 
 def fetch_api_data():
     url = 'https://jsonplaceholder.typicode.com/users'
@@ -34,7 +34,7 @@ def clean_data(api_data, web_data):
     return df_api, df_web
 
 def store_data_to_db(df_users, df_quotes):
-    conn = mysql.connector.connect(**DB_CONFIG)
+    conn = psycopg2.connect(**DB_CONFIG)  # Use psycopg2 for PostgreSQL
     cursor = conn.cursor()
 
     cursor.execute("""
@@ -47,18 +47,20 @@ def store_data_to_db(df_users, df_quotes):
 
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS quotes (
-            id INT AUTO_INCREMENT PRIMARY KEY,
+            id SERIAL PRIMARY KEY,
             quote TEXT,
             author VARCHAR(255)
         )
     """)
 
+    # Insert data into users table
     for _, row in df_users.iterrows():
         cursor.execute(
             "REPLACE INTO users (id, name, email) VALUES (%s, %s, %s)",
             (row['id'], row['name'], row['email'])
         )
 
+    # Insert data into quotes table
     for _, row in df_quotes.iterrows():
         cursor.execute(
             "INSERT INTO quotes (quote, author) VALUES (%s, %s)",
@@ -74,3 +76,6 @@ def run_pipeline():
     web_data = fetch_web_data()
     df_users, df_quotes = clean_data(api_data, web_data)
     store_data_to_db(df_users, df_quotes)
+
+# Run the pipeline
+run_pipeline()
